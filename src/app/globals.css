@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   NORTH — design tokens
+   Type: Fraunces (display serif, opsz/SOFT/WONK axes) + Archivo (UI grotesque)
+   Colour authored in OKLCH. Paper is the dominant surface, ink the text,
+   oxide is the single accent. Photography supplies all other colour.
+   ========================================================================== */
+
+@theme {
+  /* -- Typefaces --------------------------------------------------------- */
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, "Helvetica Neue", sans-serif;
+
+  /* -- Paper & ink -------------------------------------------------------- */
+  --color-paper: oklch(0.9612 0.0104 88);
+  --color-paper-3: oklch(0.9120 0.0132 87);
+  --color-ink: oklch(0.1692 0.0062 62);
+  --color-ink-2: oklch(0.2436 0.0074 62);
+  --color-muted: oklch(0.4722 0.0098 78);
+  --color-faint: oklch(0.6312 0.0102 80);
+
+  /* -- Deep section ------------------------------------------------------- */
+  --color-indigo: oklch(0.2412 0.0324 274);
+  --color-mist: oklch(0.9274 0.0058 265);
+  --color-mist-2: oklch(0.7736 0.0104 268);
+
+  /* -- Accent ------------------------------------------------------------- */
+  --color-oxide: oklch(0.5075 0.1186 33);
+  --color-oxide-2: oklch(0.5872 0.1312 38);
+  --color-signal: oklch(0.4921 0.0984 152);
+
+  /* -- Type scale ---------------------------------------------------------
+     Two steps only. Everything above body size is set per component with a
+     fluid clamp, because editorial hierarchy is art direction, not a ramp. */
+  --text-meta: 0.6875rem; /* 11px — absolute legibility floor */
+  --text-meta--line-height: 1.4;
+  --text-eyebrow: 0.75rem; /* 12px */
+  --text-eyebrow--line-height: 1.4;
+  --text-caption: 0.8125rem; /* 13px */
+  --text-caption--line-height: 1.5;
+  --text-body: 1rem; /* 16px */
+  --text-body--line-height: 1.62;
+
+  /* -- Tracking ----------------------------------------------------------- */
+  --tracking-display: -0.028em;
+  --tracking-micro: 0.17em;
+
+  /* -- Radius: essentially square. One value, used on inputs and rules. --- */
+  --radius-sharp: 1px;
+
+  /* -- Elevation (defined, tight, transparent-black) ---------------------- */
+  --shadow-press: 0 1px 2px oklch(0.1692 0.0062 62 / 0.07),
+    0 14px 30px -22px oklch(0.1692 0.0062 62 / 0.45);
+
+  /* -- Motion ------------------------------------------------------------- */
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Framer Motion measures the scroll container's relative position. */
+    position: relative;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-oxide);
+    color: var(--color-paper);
+  }
+
+  /* Display type: high optical size, a touch of softness and wonk so the
+     wordmark and headlines feel set rather than rendered. */
+  h1,
+  h2,
+  h3,
+  .display {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 18, "WONK" 1;
+    letter-spacing: var(--tracking-display);
+    text-wrap: balance;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 24, "SOFT" 0, "WONK" 0;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Visible, managed focus everywhere. Never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-oxide);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Long-form measure: never fully justified without hyphenation. */
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    /* Editorial images are cropped by art direction, not by accident. */
+    background-color: var(--color-paper-3);
+  }
+
+  /* The UA search-clear affordance is a blue glyph; the field already has a
+     Close control, so the native one only gets in the way. */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+/* Page shell — one max width, fluid gutters. */
+@layer components {
+  .shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1560px;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      padding-inline: 3rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+
+  /* Micro label — the connective tissue of an editorial layout. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: var(--tracking-micro);
+    text-transform: uppercase;
+  }
+
+  .label-xs {
+    font-family: var(--font-sans);
+    font-size: var(--text-meta);
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: var(--tracking-micro);
+    text-transform: uppercase;
+  }
+
+  /* Underline that wipes in from the left. */
+  .link-rule {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-rule::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.16em;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 520ms var(--ease-editorial);
+  }
+
+  .link-rule:hover::after,
+  .link-rule:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* The cover's standfirst sits in a column that overlaps the photograph by
+     one grid track. On wide screens the measure has to come from that
+     geometry rather than from the type, or the copy runs under the caption. */
+  .measure-cover {
+    max-width: 46ch;
+  }
+
+  @media (min-width: 1024px) {
+    .measure-cover {
+      max-width: 73%;
+    }
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  /* Film grain — one very cheap, very low-opacity pass over the whole
+     document so photography, paper and type share a single surface. */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: -120px;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.032;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Re-graded photography: pulled back off stock saturation and warmed a
+     touch so third-party images sit inside the paper palette instead of
+     fighting it. */
+  .regrade {
+    filter: saturate(0.82) contrast(1.05) brightness(1.01) sepia(0.05);
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — swap travel for a plain fade, never a blunt global zero.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
