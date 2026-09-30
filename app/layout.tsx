@@ -25,7 +25,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NORTH — Culture, in context.",
+  title: "NORTH: Culture, in context.",
   description:
     "NORTH is an independent culture magazine covering fashion, music, architecture, photography, film, design and cities.",
 };

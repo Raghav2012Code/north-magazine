@@ -1,6 +1,6 @@
-# NORTH — Culture, in context.
+# NORTH: Culture, in context.
 
-An independent culture magazine, translated to the web. A single-page editorial experience covering fashion, music, architecture, photography, film, design, people and cities — built with the restraint of a print issue: strong typography, art-directed photography, generous whitespace, quiet motion.
+An independent culture magazine, translated to the web. A single-page editorial experience covering fashion, music, architecture, photography, film, design, people and cities, built with the restraint of a print issue: strong typography, art-directed photography, generous whitespace, quiet motion.
 
 ## Stack
 
@@ -60,4 +60,4 @@ The short version: warm paper canvas, near-black ink, one deep-olive accent, pho
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT, see [LICENSE](./LICENSE).
